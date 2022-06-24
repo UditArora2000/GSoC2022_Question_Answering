@@ -18,3 +18,24 @@ Use cases of the future QA system:
 * Users will be able to see if their intended entities have been correctly identified by the QA system. If not the users can accordingly rephrase their questions to get the desirable results.
 * Users will be made aware of alternative answers in the event of the predicted answers having a low confidence score.
 * Users would have the option to improve/modify their queries in case the information user requested for is not present with in the DBpeda Knowledge Graph.
+
+```mermaid
+	graph TD;
+	    subgraph  
+	    A(Dialogflow-Agent) -->|contains| B(Entities);
+	    A(Dialogflow-Agent) -->|contains| C(Intents);
+	    end
+	    subgraph  
+	    D(RDF-Visualization) -->|contains| E(index.html);
+	    D(RDF-Visualization) -->|contains| F(app.py);
+	    end
+	    F(app.py) --> |uses| E(index.html);
+	    I(app.js) --> |graphPOSTRequest| F(app.py);
+	    subgraph  
+	    G(Webhook) --> |contains| H(components.js);
+	    G(Webhook) --> |contains| I(app.js);
+	    G(Webhook) --> |contains| J(intent.js);
+	    end
+	    I(app.js) --> |uses| H(components.js);
+	    I(app.js) --> |uses| J(intent.js);
+```
