@@ -21,22 +21,33 @@ Use cases of the future QA system:
 
 Visualization of the current QA system:
 ```mermaid
-	graph TD;
-	    subgraph  
-	    A(Dialogflow-Agent) -->|contains| B(Entities);
-	    A(Dialogflow-Agent) -->|contains| C(Intents);
+	graph TD
+	    subgraph End-User
+		    res(Default Response)
+		    exp(Input Expression)
+		    cres(Custom Response)
+		    superres(Response) --> | | cres(Custom Response)
+		    superres(Response) --> | | res(Default Response)
 	    end
-	    subgraph  
-	    D(RDF-Visualization) -->|contains| E(index.html);
-	    D(RDF-Visualization) -->|contains| F(app.py);
+	    subgraph Fullfillment
+		    wh(Webhook)
+		    wh(Webhook) --> |contains| H(components.js);
+		    wh(Webhook) --> |contains| I(app.js);
+		    wh(Webhook) --> |contains| J(intent.js);
 	    end
-	    F(app.py) --> |uses| E(index.html);
-	    I(app.js) --> |graphPOSTRequest| F(app.py);
-	    subgraph  
-	    G(Webhook) --> |contains| H(components.js);
-	    G(Webhook) --> |contains| I(app.js);
-	    G(Webhook) --> |contains| J(intent.js);
+		subgraph Dialogflow
+		    A(Dialogflow-Agent) -->|contains| B(Entities);
+			A(Dialogflow-Agent) -->|contains| C(Intents);
+		    A(Dialogflow-Agent) --> |check fulfillment| fc(Fulfillment Checker)
+		    fc(Fulfillment Checker) --> |enabled| wh(Webhook)
+		    fc(Fulfillment Checker) --> |disabled| res(Default Response)
 	    end
+	    subgraph RDF-Visualization
+		    F(app.py) --> |uses| E(index.html);
+			I(app.js) --> |graph request| F(app.py);
+	    end
+	    exp(Input Expression) --> |intent matching| A(Dialogflow-Agent)
 	    I(app.js) --> |uses| H(components.js);
-	    I(app.js) --> |uses| J(intent.js);
+		I(app.js) --> |uses| J(intent.js);
+	    I(app.js) --> |give response| cres(Custom Response)
 ```
