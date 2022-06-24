@@ -19,6 +19,7 @@ Use cases of the future QA system:
 * Users will be made aware of alternative answers in the event of the predicted answers having a low confidence score.
 * Users would have the option to improve/modify their queries in case the information user requested for is not present with in the DBpeda Knowledge Graph.
 
+Visualization of the current QA system:
 ```mermaid
 	graph TD;
 	    subgraph  
