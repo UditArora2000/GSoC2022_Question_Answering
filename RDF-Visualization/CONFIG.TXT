@@ -1,5 +1,5 @@
 [config]
-URL = https://webengineering.ins.hs-anhalt.de:40159/qanary/query
+URL = http://demos.swe.htwk-leipzig.de:40100/qanary/query
 SECOND_URL = http://demos.swe.htwk-leipzig.de:40111/startquestionansweringwithtextquestion
 USERNAME = admin
 PASSWORD = admin 

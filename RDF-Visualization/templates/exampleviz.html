@@ -1,0 +1,132 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vis-network@latest/styles/vis-network.css" type="text/css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vis-network@latest/dist/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 100%;
+            height: 750px;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+        #config {
+            float: left;
+            width: 400px;
+            height: 600px;
+        }
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<div id = "config"></div>
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"id": "tag:stardog:api:0.44842960743379967", "label": "tag:stardog:api:0.44842960743379967", "shape": "dot", "size": 10}, {"id": "http://dbpedia.org/resource/Hulk", "label": "http://dbpedia.org/resource/Hulk", "shape": "dot", "size": 10}, {"id": "https://api.dbpedia-spotlight.org/en/annotate", "label": "https://api.dbpedia-spotlight.org/en/annotate", "shape": "dot", "size": 10}, {"id": "2022-07-28T09:56:36.507000+00:00", "label": "2022-07-28T09:56:36.507000+00:00", "shape": "dot", "size": 10}, {"id": "N6bafb84a5b7d47dbafe98ab657893243", "label": "N6bafb84a5b7d47dbafe98ab657893243", "shape": "dot", "size": 10}, {"id": "0.9379745058719471", "label": "0.9379745058719471", "shape": "dot", "size": 10}, {"id": "http://www.wdaqua.eu/qa#AnnotationOfInstance", "label": "http://www.wdaqua.eu/qa#AnnotationOfInstance", "shape": "dot", "size": 10}, {"id": "tag:stardog:api:0.1269440780323181", "label": "tag:stardog:api:0.1269440780323181", "shape": "dot", "size": 10}, {"id": "tag:stardog:api:0.43080779207978004", "label": "tag:stardog:api:0.43080779207978004", "shape": "dot", "size": 10}, {"id": "http://dbpedia.org/resource/String_theory", "label": "http://dbpedia.org/resource/String_theory", "shape": "dot", "size": 10}, {"id": "0.9347568085631697", "label": "0.9347568085631697", "shape": "dot", "size": 10}, {"id": "N8efad3b4a2b04351ad8977241fe4388c", "label": "N8efad3b4a2b04351ad8977241fe4388c", "shape": "dot", "size": 10}, {"id": "Ne23058559cf340c782419a9c42536f00", "label": "Ne23058559cf340c782419a9c42536f00", "shape": "dot", "size": 10}, {"id": "0.977747974809564", "label": "0.977747974809564", "shape": "dot", "size": 10}, {"id": "http://dbpedia.org/resource/Real_number", "label": "http://dbpedia.org/resource/Real_number", "shape": "dot", "size": 10}]);
+        edges = new vis.DataSet([{"from": "tag:stardog:api:0.44842960743379967", "label": 1, "to": "http://dbpedia.org/resource/Hulk", "triples": [["tag:stardog:api:0.44842960743379967", "http://www.w3.org/ns/openannotation/core/hasBody", "http://dbpedia.org/resource/Hulk"]], "weight": 1}, {"from": "tag:stardog:api:0.44842960743379967", "label": 1, "to": "https://api.dbpedia-spotlight.org/en/annotate", "triples": [["tag:stardog:api:0.44842960743379967", "http://www.w3.org/ns/openannotation/core/annotatedBy", "https://api.dbpedia-spotlight.org/en/annotate"]], "weight": 1}, {"from": "tag:stardog:api:0.44842960743379967", "label": 1, "to": "2022-07-28T09:56:36.507000+00:00", "triples": [["tag:stardog:api:0.44842960743379967", "http://www.w3.org/ns/openannotation/core/annotatedAt", "2022-07-28T09:56:36.507000+00:00"]], "weight": 1}, {"from": "tag:stardog:api:0.44842960743379967", "label": 1, "to": "N6bafb84a5b7d47dbafe98ab657893243", "triples": [["tag:stardog:api:0.44842960743379967", "http://www.w3.org/ns/openannotation/core/hasTarget", "N6bafb84a5b7d47dbafe98ab657893243"]], "weight": 1}, {"from": "tag:stardog:api:0.44842960743379967", "label": 1, "to": "0.9379745058719471", "triples": [["tag:stardog:api:0.44842960743379967", "http://www.wdaqua.eu/qa#score", "0.9379745058719471"]], "weight": 1}, {"from": "tag:stardog:api:0.44842960743379967", "label": 1, "to": "http://www.wdaqua.eu/qa#AnnotationOfInstance", "triples": [["tag:stardog:api:0.44842960743379967", "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "http://www.wdaqua.eu/qa#AnnotationOfInstance"]], "weight": 1}, {"from": "https://api.dbpedia-spotlight.org/en/annotate", "label": 1, "to": "tag:stardog:api:0.1269440780323181", "triples": [["tag:stardog:api:0.1269440780323181", "http://www.w3.org/ns/openannotation/core/annotatedBy", "https://api.dbpedia-spotlight.org/en/annotate"]], "weight": 1}, {"from": "https://api.dbpedia-spotlight.org/en/annotate", "label": 1, "to": "tag:stardog:api:0.43080779207978004", "triples": [["tag:stardog:api:0.43080779207978004", "http://www.w3.org/ns/openannotation/core/annotatedBy", "https://api.dbpedia-spotlight.org/en/annotate"]], "weight": 1}, {"from": "tag:stardog:api:0.43080779207978004", "label": 1, "to": "http://www.wdaqua.eu/qa#AnnotationOfInstance", "triples": [["tag:stardog:api:0.43080779207978004", "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "http://www.wdaqua.eu/qa#AnnotationOfInstance"]], "weight": 1}, {"from": "tag:stardog:api:0.43080779207978004", "label": 1, "to": "http://dbpedia.org/resource/String_theory", "triples": [["tag:stardog:api:0.43080779207978004", "http://www.w3.org/ns/openannotation/core/hasBody", "http://dbpedia.org/resource/String_theory"]], "weight": 1}, {"from": "tag:stardog:api:0.43080779207978004", "label": 1, "to": "0.9347568085631697", "triples": [["tag:stardog:api:0.43080779207978004", "http://www.wdaqua.eu/qa#score", "0.9347568085631697"]], "weight": 1}, {"from": "tag:stardog:api:0.43080779207978004", "label": 1, "to": "2022-07-28T09:56:36.507000+00:00", "triples": [["tag:stardog:api:0.43080779207978004", "http://www.w3.org/ns/openannotation/core/annotatedAt", "2022-07-28T09:56:36.507000+00:00"]], "weight": 1}, {"from": "tag:stardog:api:0.43080779207978004", "label": 1, "to": "N8efad3b4a2b04351ad8977241fe4388c", "triples": [["tag:stardog:api:0.43080779207978004", "http://www.w3.org/ns/openannotation/core/hasTarget", "N8efad3b4a2b04351ad8977241fe4388c"]], "weight": 1}, {"from": "http://www.wdaqua.eu/qa#AnnotationOfInstance", "label": 1, "to": "tag:stardog:api:0.1269440780323181", "triples": [["tag:stardog:api:0.1269440780323181", "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", "http://www.wdaqua.eu/qa#AnnotationOfInstance"]], "weight": 1}, {"from": "2022-07-28T09:56:36.507000+00:00", "label": 1, "to": "tag:stardog:api:0.1269440780323181", "triples": [["tag:stardog:api:0.1269440780323181", "http://www.w3.org/ns/openannotation/core/annotatedAt", "2022-07-28T09:56:36.507000+00:00"]], "weight": 1}, {"from": "tag:stardog:api:0.1269440780323181", "label": 1, "to": "Ne23058559cf340c782419a9c42536f00", "triples": [["tag:stardog:api:0.1269440780323181", "http://www.w3.org/ns/openannotation/core/hasTarget", "Ne23058559cf340c782419a9c42536f00"]], "weight": 1}, {"from": "tag:stardog:api:0.1269440780323181", "label": 1, "to": "0.977747974809564", "triples": [["tag:stardog:api:0.1269440780323181", "http://www.wdaqua.eu/qa#score", "0.977747974809564"]], "weight": 1}, {"from": "tag:stardog:api:0.1269440780323181", "label": 1, "to": "http://dbpedia.org/resource/Real_number", "triples": [["tag:stardog:api:0.1269440780323181", "http://www.w3.org/ns/openannotation/core/hasBody", "http://dbpedia.org/resource/Real_number"]], "weight": 1}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": true,
+        "filter": [
+            "physics"
+        ]
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "forceAtlas2Based": {
+            "avoidOverlap": 0,
+            "centralGravity": "0",
+            "damping": 0.4,
+            "gravitationalConstant": "-90",
+            "springConstant": 0.08,
+            "springLength": "175"
+        },
+        "solver": "forceAtlas2Based",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+        // if this network requires displaying the configure window,
+        // put it in its div
+        options.configure["container"] = document.getElementById("config");
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>

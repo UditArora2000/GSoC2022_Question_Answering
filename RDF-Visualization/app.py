@@ -52,12 +52,7 @@ def html_page():
 	get_graph_id = requests.post(SECOND_URL,
 			params={
 					"question": "What is the real name of hulk?",
-					"componentlist[]": ["NED-DBpediaSpotlight",
-					"QueryBuilderSimpleRealNameOfSuperHero",
-					"SparqlExecuter",
-					"OpenTapiocaNED",
-					"BirthDataQueryBuilder",
-					"WikidataQueryExecuter"]
+					"componentlist[]": ["NED-DBpediaSpotlight"]
 	})
 	res_json = get_graph_id.json()   
 	print(res_json)
@@ -65,10 +60,12 @@ def html_page():
 	sparql_database = SPARQLWrapper(URL)
 	sparql_database.setCredentials(USERNAME, PASSWORD)
 	sparql_query = """ 
+	PREFIX qa: <http://www.wdaqua.eu/qa#>
+	PREFIX oa: <http://www.w3.org/ns/openannotation/core/>
 	DESCRIBE *
 	FROM <""" + graph_id_test  + """>
 	WHERE {
-		VALUES ?type { qa:AnnotationOfAnswerSPARQL qa:AnnotationOfQaInterface }
+		VALUES ?type { qa:AnnotationOfInstance }
 		?s a ?type .
 		?s oa:annotatedBy ?annotatingService .
 		?s oa:annotatedAt ?time .
@@ -90,7 +87,7 @@ def html_page():
 if __name__ == '__main__':
 	port = int(os.environ.get("PORT", 5000))
 	if os.environ.get("SSL_CERT") and os.environ.get("SSL_KEY"):
-		app.run(host='127.0.0.1', port=port, ssl_context=(os.environ.get("SSL_CERT"), os.environ.get("SSL_KEY")))
+		app.run(host='0.0.0.0', port=port, ssl_context=(os.environ.get("SSL_CERT"), os.environ.get("SSL_KEY")))
 	else:
-		app.run(host='127.0.0.1', port=port)
+		app.run(host='0.0.0.0', port=port)
 	app.run()
